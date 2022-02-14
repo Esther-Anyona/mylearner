@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, flash
 from . import auth
 from ..models import User
 from .. import db
@@ -7,7 +7,7 @@ from flask_login import login_user,logout_user,login_required
 
 
 
-@auth.route('auth/login')
+@auth.route('auth/login',methods=['GET','POST'])
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
@@ -33,10 +33,10 @@ def register():
         db.session.commit()
 
         mail_message("Welcome to Myblog","email/welcome_user",user.email,user=user)
+        title = "New Account"
 
         return redirect(url_for('auth.login'))
-        title = "New Account"
-    return render_template('auth/register.html',registration_form = form, title=title)
+    return render_template('auth/register.html',registration_form = form)
 
 
 @auth.route('auth/logout')
