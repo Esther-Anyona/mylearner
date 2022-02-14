@@ -1,9 +1,9 @@
-from flask import render_template,request,redirect,url_for,abort
+from flask import render_template,request,redirect,url_for,abort, flash
 from ..models import User, Post
 from . import main
 from flask_login import login_required
 from .. import db, photos
-from .forms import UpdateProfile
+from .forms import UpdateProfile, PostForm
 
 @main.route('/')
 def home():
@@ -52,3 +52,17 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+
+@main.route('/post/new',methods= ['GET','POST'])
+@login_required
+def new_post():
+    postform=PostForm()
+    if postform.validate_on_submit():
+        flash('Your post has been posted!', 'success')
+        return redirect(url_for('.home'))
+
+    return render_template('create_post.html',postform =postform)
+
+
+
