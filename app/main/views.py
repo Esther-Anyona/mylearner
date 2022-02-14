@@ -1,15 +1,15 @@
 from flask import render_template,request,redirect,url_for,abort, flash
 from ..models import User, Post
 from . import main
-from flask_login import login_required
+from flask_login import login_required, current_user
 from .. import db, photos
 from .forms import UpdateProfile, PostForm
 
 @main.route('/')
 def home():
-
+    posts= Post.query.all()
     title="My Learning Blog"
-    return render_template('home.html', title=title)
+    return render_template('home.html', title=title, posts=posts)
 
 
 @main.route('/user/<uname>')
@@ -59,8 +59,11 @@ def update_pic(uname):
 def new_post():
     postform=PostForm()
     if postform.validate_on_submit():
-        flash('Your post has been posted!', 'success')
+        post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().id)
+        db.session.add(post)
+        db.session.commit()
         return redirect(url_for('.home'))
+        flash('Your post has been posted!', 'success')
 
     return render_template('create_post.html',postform =postform)
 
