@@ -1,0 +1,3 @@
+Hello {{user.username}}
+Thank you for signing up for my blog. I hope you enjoy the experience and education articles.
+Reviews are appreciated, don't forget to comment.

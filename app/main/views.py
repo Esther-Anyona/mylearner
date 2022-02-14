@@ -1,8 +1,15 @@
 from flask import render_template,request,redirect,url_for,abort
 from ..models import User, Post
+from . import main
 from flask_login import login_required
 from .. import db, photos
 from .forms import UpdateProfile
+
+@main.route('/')
+def home():
+
+    title="My Learning Blog"
+    return render_template('home.html', title=title)
 
 
 @main.route('/user/<uname>')
