@@ -7,7 +7,7 @@ from .forms import UpdateProfile, PostForm
 
 @main.route('/')
 def home():
-    posts= Post.query.all()
+    posts= Post.query.order_by(post.date_posted.desc()).all()
     title="My Learning Blog"
     return render_template('home.html', title=title, posts=posts)
 
