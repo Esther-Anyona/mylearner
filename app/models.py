@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     profile_pic_path = db.Column(db.String(50), nullable=False, default='default.jpg')
     password_hash = db.Column(db.String(70), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
+    bio = db.Column(db.Text)
 
     @property
     def password(self):
