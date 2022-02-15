@@ -4,12 +4,14 @@ from . import main
 from flask_login import login_required, current_user
 from .. import db, photos
 from .forms import UpdateProfile, PostForm, CommentForm
+from ..requests import get_quotes
 
 @main.route('/')
 def home():
+    quotes= get_quotes()
     posts= Post.query.order_by(Post.date_posted.desc()).all()
     title="My Learning post"
-    return render_template('home.html', title=title, posts=posts)
+    return render_template('home.html', title=title, posts=posts, quote=quotes)
 
 
 @main.route('/user/<uname>')

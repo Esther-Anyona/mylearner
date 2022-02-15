@@ -1,9 +1,17 @@
 body{
     background-color: rgb(221, 209, 205);
+    font-family:  serif;
+    font-size: 25px;
+
 }
+h4{
+    font-style: italic;
+}
+
 #posts{
     border: 10px;
     border-radius: 5px;
     margin: 10px;
     background-color: rgba(93, 127, 219, 0.6);
 }
+

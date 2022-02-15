@@ -1,5 +1,11 @@
 {% extends 'base.html'%}
 {% block content%}
+<div class="container">
+    <div class="quote">
+        <p class="card-text">"{{quote.quote}}"</p>
+        <h4>Author: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
+    </div> 
+</div>
 <div class="container" id="posts">
     {% for post in posts %}
     <div class="card p-5">
@@ -14,8 +20,8 @@
                 <p>{{post.content}}</p>
             </div>
             <div class="card-footer">
-                <h5><span>By:</span>{{post.author.username|title()}}</h5>
-                <p><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</p>
+                <h4><span>By:</span>{{post.author.username|title()}}</h4>
+                <h4><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</4>
             </div>
             <a href="{{url_for('main.comment',post_id = post.id)}}" class="btn btn-info btn-sm m-10"> Comments</a>
             </div>

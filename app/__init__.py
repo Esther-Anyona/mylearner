@@ -43,6 +43,5 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint,url_prefix = '/authenticate')
 
 
-
     return app
 
