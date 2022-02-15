@@ -65,7 +65,7 @@ def new_post():
         return redirect(url_for('.home'))
         flash('Your post has been posted!', 'success')
 
-    return render_template('create_post.html',postform =postform)
+    return render_template('create_post.html',postform =postform, title='New Post',legend='New Post')
 
 @main.route('/comment/<int:post_id>', methods = ['POST','GET'])
 @login_required
@@ -89,9 +89,7 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', post = post, title=post.title)
 
-
-
-@main.route('/post/<post_id>/update', methods = ['GET','POST'])
+@main.route('/post/<int:post_id>/update', methods = ['GET','POST'])
 @login_required
 def updatepost(post_id):
     post = Post.query.get(post_id)
@@ -102,11 +100,23 @@ def updatepost(post_id):
         post.title = postform.title.data
         post.content = postform.content.data
         db.session.commit()
+
         flash('Your post has been updated!', 'success')
         return redirect(url_for('main.post',post_id = post.id)) 
-    if request.method == 'GET':
+    elif request.method == 'GET':
         post.title = postform.title.data
         post.content = postform.content.data
 
-    return render_template('create_post.html', postform = postform)
+    return render_template('create_post.html', postform = postform, title='Update Post',legend='Update Post')
+
+@main.route('/post/<int:post_id>/delete', methods = ['POST'])
+@login_required
+def deletepost(post_id):
+    post = Post.query.get(post_id)
+    if post.author != current_user:
+        abort(403)
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted!', 'success')
+        return redirect(url_for('.home'))
 

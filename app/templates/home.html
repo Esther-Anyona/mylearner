@@ -5,7 +5,8 @@
     <div class="card p-5">
         <div class="row-cols-4">
             <div class="col-lg-2 col-md-3 col-sm-3 col-4 d-flex justify-content-center">
-                <img class="rounded-circle" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="">
+                <br>
+                <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="">
                 <div class="card-title">
                 <h3 ><a style="color: rgb(23, 116, 116); font-weight: 700;" href="{{url_for('main.post',post_id = post.id)}}">{{post.title}}</a></h3>
             </div>
