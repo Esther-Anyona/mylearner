@@ -7,7 +7,8 @@ from .forms import UpdateProfile, PostForm
 
 @main.route('/')
 def home():
-    posts= Post.query.order_by(post.date_posted.desc()).all()
+    posts= Post.query.order_by(Post.date_posted.desc()).all()
+    user_id= current_user._get_current_object().username
     title="My Learning Blog"
     return render_template('home.html', title=title, posts=posts)
 
@@ -59,7 +60,7 @@ def update_pic(uname):
 def new_post():
     postform=PostForm()
     if postform.validate_on_submit():
-        post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().id)
+        post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().name)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('.home'))
