@@ -97,16 +97,16 @@ def updatepost(post_id):
     post = Post.query.get(post_id)
     if post.author != current_user:
         abort(403)
-    updateform = PostForm()
-    if updateform.validate_on_submit():
-        post.title = updateform.title.data
-        post.content = updateform.content.data
+    postform = PostForm()
+    if postform.validate_on_submit():
+        post.title = postform.title.data
+        post.content = postform.content.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
-        return redirect(url_for('main.post',id = post.id)) 
+        return redirect(url_for('main.post',post_id = post.id)) 
     if request.method == 'GET':
-        post.title = updateform.title.data
-        post.content = updateform.content.data
+        post.title = postform.title.data
+        post.content = postform.content.data
 
-    return render_template('create_post.html', updateform = updateform)
+    return render_template('create_post.html', postform = postform)
 
