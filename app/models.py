@@ -19,6 +19,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
     bio = db.Column(db.Text)
+    comments = db.relationship('Comment',backref='author',lazy='dynamic')
+
 
     @property
     def password(self):
@@ -44,6 +46,27 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id =db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
+    comments = db.relationship('Comment',backref='post',lazy='dynamic')
     def __repr__(self):
         return f"User{self.title}"
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.Text(),nullable = False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
+    post_id = db.Column(db.Integer,db.ForeignKey('posts.id'),nullable = False)
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_comments(cls,post_id):
+        comments = Comment.query.filter_by(post_id=post_id).all()
+
+        return comments
+
+    
+    def __repr__(self):
+        return f'comment:{self.comment}'

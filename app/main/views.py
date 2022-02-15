@@ -1,14 +1,13 @@
 from flask import render_template,request,redirect,url_for,abort, flash
-from ..models import User, Post
+from ..models import User, Post, Comment
 from . import main
 from flask_login import login_required, current_user
 from .. import db, photos
-from .forms import UpdateProfile, PostForm
+from .forms import UpdateProfile, PostForm, CommentForm
 
 @main.route('/')
 def home():
     posts= Post.query.order_by(Post.date_posted.desc()).all()
-    user_id= current_user._get_current_object().username
     title="My Learning Blog"
     return render_template('home.html', title=title, posts=posts)
 
@@ -60,7 +59,7 @@ def update_pic(uname):
 def new_post():
     postform=PostForm()
     if postform.validate_on_submit():
-        post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().name)
+        post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().id)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('.home'))
@@ -68,5 +67,18 @@ def new_post():
 
     return render_template('create_post.html',postform =postform)
 
-
+@main.route('/comment/<int:post_id>', methods = ['POST','GET'])
+@login_required
+def comment(post_id):
+    commentform = CommentForm()
+    post = Post.query.get(post_id)
+    comments = Comment.query.filter_by(post_id = post_id).all()
+    if commentform.validate_on_submit():
+        comment = commentform.comment.data 
+        post_id = post_id
+        user_id = current_user._get_current_object().id
+        new_comment = Comment(comment = comment,user_id = user_id,post_id = post_id)
+        new_comment.save_comment()
+        return redirect(url_for('.comment', post_id = post_id))
+    return render_template('comment.html', commentform =commentform, post = post, comments=comments)
 
