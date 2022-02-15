@@ -1,10 +1,12 @@
 from flask import render_template,request,redirect,url_for,abort, flash
-from ..models import User, Post, Comment
+from ..models import User, Post, Comment, Subscriber
 from . import main
 from flask_login import login_required, current_user
 from .. import db, photos
 from .forms import UpdateProfile, PostForm, CommentForm
 from ..requests import get_quotes
+from ..email import mail_message
+
 
 @main.route('/')
 def home():
@@ -59,11 +61,14 @@ def update_pic(uname):
 @main.route('/post/new',methods= ['GET','POST'])
 @login_required
 def new_post():
+    subscribers = Subscriber.query.all()
     postform=PostForm()
     if postform.validate_on_submit():
         post = Post(title=postform.title.data, content=postform.content.data, user_id=current_user._get_current_object().id)
         db.session.add(post)
         db.session.commit()
+        for subscriber in subscribers:
+            mail_message("New post created!","email/new_post",subscriber.email,post=post)
         return redirect(url_for('.home'))
         flash('Your post has been posted!', 'success')
 
@@ -81,7 +86,7 @@ def comment(post_id):
         user_id = current_user._get_current_object().id
         new_comment = Comment(comment = comment,user_id = user_id,post_id = post_id)
         new_comment.save_comment()
-        return redirect(url_for('.comment', id = post_id))
+        return redirect(url_for('.comment', post_id = post_id))
     return render_template('comment.html', commentform =commentform, post = post, comments=comments)
 
 

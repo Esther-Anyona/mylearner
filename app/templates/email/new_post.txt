@@ -1,0 +1,6 @@
+Thank you for subscribing to Myblog {{user.username}}!
+New post created!
+Title: {{post.title}}
+Post: {{post.content|truncate(50)}}
+
+
