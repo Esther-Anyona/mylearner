@@ -1,6 +1,9 @@
-.card{
+body{
+    background-color: rgb(221, 209, 205);
+}
+#posts{
     border: 10px;
     border-radius: 5px;
     margin: 10px;
-    background-color: aquamarine;
+    background-color: rgba(93, 127, 219, 0.6);
 }

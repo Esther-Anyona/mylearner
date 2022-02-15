@@ -10,9 +10,9 @@
                     {% for comment in comments %}
                     <div class="card w-90 mb-3" >
                         <div class="card-body text-center">
+                            <h6>{{comment.id}}.</h6>
                             <h5>{{comment.post.title}}</h5>
-                            <p class="card-title text-center">{{ comment.comment }}</p>
-                            <p class="card-text text-center">comment by: {{comment.author.username|title()}}</p>
+                            <p class="card-title text-center">"{{ comment.comment }}", says {{comment.author.username|title()}}</p>
                         </div>
                     </div>
                     {% endfor %}

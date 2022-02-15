@@ -8,7 +8,7 @@ from .forms import UpdateProfile, PostForm, CommentForm
 @main.route('/')
 def home():
     posts= Post.query.order_by(Post.date_posted.desc()).all()
-    title="My Learning Blog"
+    title="My Learning post"
     return render_template('home.html', title=title, posts=posts)
 
 
@@ -79,6 +79,34 @@ def comment(post_id):
         user_id = current_user._get_current_object().id
         new_comment = Comment(comment = comment,user_id = user_id,post_id = post_id)
         new_comment.save_comment()
-        return redirect(url_for('.comment', post_id = post_id))
+        return redirect(url_for('.comment', id = post_id))
     return render_template('comment.html', commentform =commentform, post = post, comments=comments)
+
+
+@main.route('/post/<int:post_id>', methods = ['GET','POST'])
+@login_required
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', post = post, title=post.title)
+
+
+
+@main.route('/post/<post_id>/update', methods = ['GET','POST'])
+@login_required
+def updatepost(post_id):
+    post = Post.query.get(post_id)
+    if post.author != current_user:
+        abort(403)
+    updateform = PostForm()
+    if updateform.validate_on_submit():
+        post.title = updateform.title.data
+        post.content = updateform.content.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('main.post',id = post.id)) 
+    if request.method == 'GET':
+        post.title = updateform.title.data
+        post.content = updateform.content.data
+
+    return render_template('create_post.html', updateform = updateform)
 
