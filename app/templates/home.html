@@ -11,7 +11,7 @@
     <h1 class="text-center mt-50 p-20"><strong>Myblog</strong></h1>
     <div class="row">
         {% for post in posts %}
-            <div class="col-md-2 d-flex justify-content-center">
+            <div class="col-md-3 col-sm-4 d-flex justify-content-center">
                 <div class="card">
         <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" class="card-img-top" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="Card image cap">
                     <div class="card-body">
