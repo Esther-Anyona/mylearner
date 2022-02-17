@@ -14,10 +14,9 @@
             <div class="col-md-2 d-flex justify-content-center">
                 <div class="card">
         <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" class="card-img-top" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="Card image cap">
-                <!-- <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt=""> -->
                     <div class="card-body">
                     <h3><a style="color: rgb(23, 116, 116); font-weight: 700;" href="{{url_for('main.post',post_id = post.id)}}">{{post.title}}</a></h3>
-                            <h4 class="card-title">{{post.author.username|title()}}</h4>
+                            <h4 class="card-title">Author: {{post.author.username|title()}}</h4>
                         </a> 
                         <p class="card-text">{{post.content | truncate(150)}}</p>
                         <h4><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</4>

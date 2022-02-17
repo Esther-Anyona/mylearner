@@ -1,25 +1,21 @@
 {% extends 'base.html'%}
 {% block content%}
-<div class="container" id="posts">
+<div class="container-fluid" id="posts">
     <div class="card p-5">
-        <div class="row-cols-4">
-            <div class="col-lg-2 col-md-3 col-sm-3 col-4 d-flex justify-content-center">
-                <br>
+        <div class="row">
+            <div class="col-md-3 d-flex justify-content-center">
+            <div>
+                <div class="card">
+
                 <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px"src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="">
-            <div class="card-title">
                 <h3 style="color: rgb(23, 116, 116); font-weight: 700;">{{post.title}}</h3>
-            </div>
-            <div class="card-text">
                 <p>{{post.content}}</p>
-            </div>
             {% if post.author==current_user %}
-                <div>
                     <a href="{{url_for('main.updatepost', post_id=post.id)}}" class="btn btn-primary btn-sm m-2">Update</a>
                         <button class="btn btn-danger btn-sm m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                 </div>
             {% endif%}
-            <div class="card-footer">
-                <h5><span>By:</span>{{post.author.username|title()}}</h5>
+                <h5><span>Author: </span>{{post.author.username|title()}}</h5>
                 <p><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</p>
             </div>
             </div>
