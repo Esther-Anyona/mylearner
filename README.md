@@ -1,14 +1,18 @@
 # Myblog
 <hr>
-## Author
+
+# Author
+
 [Esther-Anyona](https://github.com/Esther-Anyona)
 <hr>
+
 [Live link](https://star-blog1.herokuapp.com)
 
 ## Description
 This is a python flask application that allows users to post blogs, edit and delete blogs. It also requires users to sign up in order to comment on other users' posts as well as edit and comment on their own posts. on sign up, a user receives a welcome email. Users create their own profiles which they can update at any time.
 
 ## Screenshot
+
 [Myblog homepage](app/static/photos/myblog1.png)
 
 ## User Stories
