@@ -1,33 +1,35 @@
 {% extends 'base.html'%}
 {% block content%}
-<div class="container">
-    <div class="quote">
+<div class="container-fluid" id="quote">
+    <h1>We keep you entertained with these awesome quotes</h1>
+    <div class="quote px-5">
         <p class="card-text">"{{quote.quote}}"</p>
-        <h4>Author: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h4>
+        <h3>Author: <span style="color: rgb(3, 3, 3)">{{quote.author}}</span> </h3>
     </div> 
 </div>
-<div class="container" id="posts">
-    {% for post in posts %}
-    <div class="card p-5">
-        <div class="row-cols-4">
-            <div class="col-lg-2 col-md-3 col-sm-3 col-4 d-flex justify-content-center">
-                <br>
-                <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="">
-                <div class="card-title">
-                <h3 ><a style="color: rgb(23, 116, 116); font-weight: 700;" href="{{url_for('main.post',post_id = post.id)}}">{{post.title}}</a></h3>
+<div class="container-fluid mb-20" id="posts">
+    <h1 class="text-center mt-50 p-20"><strong>Myblog</strong></h1>
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-2 d-flex justify-content-center">
+                <div class="card">
+        <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" class="card-img-top" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt="Card image cap">
+                <!-- <img style="border-radius: 50px;" class="rounded-circle" width="100px" height="100px" src="{{url_for('static',filename= post.author.profile_pic_path)}}" alt=""> -->
+                    <div class="card-body">
+                    <h3><a style="color: rgb(23, 116, 116); font-weight: 700;" href="{{url_for('main.post',post_id = post.id)}}">{{post.title}}</a></h3>
+                            <h4 class="card-title">{{post.author.username|title()}}</h4>
+                        </a> 
+                        <p class="card-text">{{post.content | truncate(150)}}</p>
+                        <h4><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</4>
+                    </div>
+                <p><a href="{{url_for('main.comment',post_id = post.id)}}" class="btn btn-info btn-sm text-center"> Comments</a></p>
+                  </div>
             </div>
-            <div class="card-text">
-                <p>{{post.content}}</p>
-            </div>
-            <div class="card-footer">
-                <h4><span>By:</span>{{post.author.username|title()}}</h4>
-                <h4><span> Date posted:</span>{{post.date_posted.strftime("%Y-%m-%d")}}</4>
-            </div>
-            <a href="{{url_for('main.comment',post_id = post.id)}}" class="btn btn-info btn-sm m-10"> Comments</a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor%}
+        <div class="footer bg-dark justify-content-center center">
+            <p class="copyright">copyright &copy; 2022 Esther Anyona | Myblog</p>
+        </div>
 </div>
 {% endblock %}
 

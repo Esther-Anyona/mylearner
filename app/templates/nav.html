@@ -1,29 +1,30 @@
-<div class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"> Myblog </a>
+      <h2 class="navbar-brand mx-5 " href="{{url_for('main.home')}}" >Myblog</h2>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ">
+          <a class="nav-link active mx-5" aria-current="page" href="{{url_for('main.home')}}">Home</a>
+          <a class="nav-link active mx-5" aria-current="page" href="{{url_for('main.new_post')}}">New Post</a>
+          
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li> 
-        </div>
-        <div>
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.is_authenticated %}
-                <li><a href="{{url_for('main.new_post')}}" class="nav-item nav-link">New Post</a></li>
-                <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
-                <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
-                {% else %}
-                <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-                {%endif%}
-              </ul>
-        </div>
-
+  
+        <div class="collapse navbar-collapse justify-content-end mx-5" id="navbarNavAltMarkup">
+          <div class="navbar-nav ">
+  
+            {% if current_user.is_authenticated %}
+            <img style="border-radius: 50px;" class="rounded-circle" width="80px" height="80px" src="{{url_for('static',filename=current_user.profile_pic_path)}}" alt="prof-pic" class="img-thumbnail">
+            <a class="nav-link text-white" aria-current="page" href="{{url_for('main.profile',uname=current_user.username)}}"><strong> {{current_user.username}} </strong><span class="mx-lg-5"> Profile</span></a>
+            <a class="nav-link text-white" aria-current="page" href="{{url_for('auth.logout')}}">Logout</a>
+  
+            {%else%}
+            <a class="nav-link mx-lg-5 text-white" aria-current="page" href="{{url_for('auth.login')}}">Login</a>
+            {% endif %}
+          </div>
+      </div>
     </div>
-</div>
+  </nav>
+
+

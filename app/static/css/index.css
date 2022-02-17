@@ -1,17 +1,62 @@
 body{
-    background-color: rgb(221, 209, 205);
     font-family:  serif;
     font-size: 25px;
-
+}
+.navbar{
+    position: sticky;
+    top:0;
+    z-index:100;
+}
+h1{
+    color: rgb(163, 34, 175);
+    font-size: 30px;
+    font-style: italic;
+    text-align: center;
+    font-weight: bolder;
+    margin-top: 20px;
+    background-color: black;
+}
+.card{
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 h4{
     font-style: italic;
 }
-
 #posts{
     border: 10px;
     border-radius: 5px;
     margin: 10px;
-    background-color: rgba(93, 127, 219, 0.6);
+    background-color: rgb(203, 230, 230);
+}
+#quote{
+    background-image: url(../photos/bg_image.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 400px;
+    position: relative;
+}
+.quote{
+    background-color: rgb(203, 230, 230);
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -40%);
+    color: #6c1e74;
+    font-size:xx-large;
+    font-weight: bold;
+}
+a,.btn{
+    font-size: 30px;
+}
+.copyright{
+    color: #ffff;
+    text-align: center;
+    height: 60px;
+    padding-top: 20px;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: bold;
 }
 
